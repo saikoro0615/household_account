@@ -7,8 +7,8 @@ class ChangePageButtons(tk.Frame):
   def __init__(self, parent):
     super().__init__(parent)
 
-    tk.Button(self, text="１：書き込み").pack()
-    tk.Button(self, text="２：カレンダー").pack()
+    ttk.Button(self, text="１：書き込み").grid()
+    ttk.Button(self, text="２：カレンダー").grid()
 
 class View(tk.Tk):
   def __init__(self, *args, **kwargs):
@@ -27,7 +27,20 @@ class View(tk.Tk):
     """
     self.input_frame = tk.Frame(self)
     self.input_frame.grid(row=0, column=0, sticky="nsew")
-    ChangePageButtons(self.input_frame).pack(anchor="nw", padx=0, pady=0)
+
+    #グリッド設計（3列4行）
+    for i in range(3):  #3列
+      self.input_frame.grid_columnconfigure(i, weight=1)
+    for i in range(4):  #4行
+      self.input_frame.grid_rowconfigure(i, weight=0)
+
+    ChangePageButtons(self.input_frame).grid(row=0, column=0, padx=10, pady=10, sticky="nw")
+
+    self.income_button = tk.Button(self.input_frame,text="支出",width=15,height=2,bg="lightblue")
+    self.income_button.grid(row=0, column=1, padx=10,pady=10, sticky="nsew")
+    
+    self.expense_button = tk.Button(self.input_frame,text="収入",width=15,height=2,bg="lightblue")
+    self.expense_button.grid(row=0, column=2, padx=10,pady=10, sticky="nsew")
 
 
     """
