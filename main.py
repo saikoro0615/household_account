@@ -1,5 +1,5 @@
 from model import Model
-from view import View
+from view.view import View
 from controller import Controller
 
 def main():

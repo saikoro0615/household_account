@@ -43,7 +43,7 @@ class DateTimeView(tk.Frame):
     dateView_label = tk.Label(self, text="test", font=("Arial", 20),bd=2, relief="solid" )
     dateView_label.grid(columnspan=3, row=0, column=2, padx=10,pady=10,sticky="nsew")
 
-class amountView(tk.Frame):
+class AmountView(tk.Frame):
   """金額を記入するボックス用クラス"""
   def __init__(self, master):
     super().__init__(master)
@@ -62,7 +62,7 @@ class amountView(tk.Frame):
     amount_text = tk.Entry(self)
     amount_text.grid(columnspan=5, row=0, column=1, padx=10,pady=10,sticky="nsew")
 
-class memoView(tk.Frame):
+class MemoView(tk.Frame):
   """メモを記入するボックス用クラス"""
   def __init__(self, master):
     super().__init__(master)
@@ -81,7 +81,7 @@ class memoView(tk.Frame):
     self.memo_text.grid(columnspan=5,row=0,column=1, padx=10,pady=10,sticky="nsew")
 
 
-class CalenderView(tk.Frame):
+class CalendarView(tk.Frame):
   """収支を日付ごとに表示するカレンダー用クラス"""
   def __init__(self, master):
     super().__init__(master)
@@ -90,8 +90,8 @@ class CalenderView(tk.Frame):
     self.grid_columnconfigure(0, weight=1)
 
     #テスト用でリストで配置
-    self.calender = tk.Listbox(self)
-    self.calender.grid(row=0, column=0, sticky="nsew")
+    self.calendar = tk.Listbox(self)
+    self.calendar.grid(row=0, column=0, sticky="nsew")
 
 
 class IncomeAndExpenseView(tk.Frame):
@@ -113,7 +113,7 @@ class IncomeAndExpenseView(tk.Frame):
     self.incAndExp_label.grid(row=1, column=0, padx=10, pady=10, sticky="nsew")
 
 
-class MounthIncAndExpListView(tk.Frame):
+class MonthIncAndExpListView(tk.Frame):
   """月間の収支を日付ごとに表示するリスト用クラス"""
   def __init__(self, master):
     super().__init__(master)
@@ -159,7 +159,8 @@ class View(tk.Tk):
     for i in range(8):  #8行
       self.input_frame.grid_rowconfigure(i, weight=1)
     #画面切り替え用ボタン
-    ChangePageButtons(self.input_frame).grid(rowspan=2,row=0, column=0, padx=10, pady=10, sticky="nsew")
+    self.inputChangePageButtons = ChangePageButtons(self.input_frame)
+    self.inputChangePageButtons.grid(rowspan=2,row=0, column=0, padx=10, pady=10, sticky="nsew")
     #収入ボタン
     self.income_button = tk.Button(self.input_frame,text="収入",bg="lightblue", font=("Arial", 20),bd=2)
     self.income_button.grid(row=0, column=1, padx=10,pady=10,sticky="nsew")
@@ -170,10 +171,10 @@ class View(tk.Tk):
     self.dateView_label = DateTimeView(self.input_frame)
     self.dateView_label.grid(columnspan=2,row=1, column=1, padx=10,pady=10,sticky="nsew")
     #メモ記入ボックス
-    self.memo_textbox = memoView(self.input_frame)
+    self.memo_textbox = MemoView(self.input_frame)
     self.memo_textbox.grid(columnspan=2,row=2,column=1, padx=10,pady=10,sticky="nsew")
     #金額記入ボックス
-    self.amount_textbox = amountView(self.input_frame)
+    self.amount_textbox = AmountView(self.input_frame)
     self.amount_textbox.grid(columnspan=2, row=3, column=1, padx=10,pady=10,sticky="nsew")
     #カテゴリリストボックス
     self.category_listbox = tk.Listbox(self.input_frame)
@@ -194,13 +195,14 @@ class View(tk.Tk):
     for i in range(8):  #8行
       self.conf_frame.grid_rowconfigure(i, weight=1)
     #画面切り替えボタン
-    ChangePageButtons(self.conf_frame).grid(rowspan=2,row=0, column=0, padx=10, pady=10, sticky="nsew")
+    self.confChangePageButtons = ChangePageButtons(self.conf_frame)
+    self.confChangePageButtons.grid(rowspan=2,row=0, column=0, padx=10, pady=10, sticky="nsew")
     #日付表示ラベル（月）
     self.monthView_label = DateTimeView(self.conf_frame)
     self.monthView_label.grid(columnspan=3, row=0, column=1, padx=10, pady=10, sticky="nsew")
     #カレンダー
-    self.calender = CalenderView(self.conf_frame)
-    self.calender.grid(rowspan=3, columnspan=3, row=1, column=1, padx=10, pady=10, sticky="nsew")
+    self.calendar = CalendarView(self.conf_frame)
+    self.calendar.grid(rowspan=3, columnspan=3, row=1, column=1, padx=10, pady=10, sticky="nsew")
 
 
     #総収入表示ラベル
@@ -215,7 +217,7 @@ class View(tk.Tk):
     self.totalIncAndExp_label = IncomeAndExpenseView(self.conf_frame)
     self.totalIncAndExp_label.grid(row=4, column=3, padx=10, pady=10, sticky="nsew")
     #月間収支リスト
-    self.mounthIncAndExp_list = MounthIncAndExpListView(self.conf_frame)
+    self.mounthIncAndExp_list = MonthIncAndExpListView(self.conf_frame)
     self.mounthIncAndExp_list.grid(rowspan=3, columnspan=3, row=5, column=1, padx=10, pady=10, sticky="nsew")
 
     """デバッグ用"""
