@@ -4,10 +4,10 @@ from model.database_model import DataBaseModel
 
 
 class InputViewController():
-  def __init__(self,input_view):
-    self.date_model = DateManagerModel()
-    self.database_model = DataBaseModel()
-    self.input_view = input_view
+  def __init__(self,input_view, date_model, db_model):
+    self.input_view = input_view #InputView():
+    self.date_model = date_model #DateManagerModel()
+    self.database_model = db_model #DataBaseModel()
     self.bind_events()
     self.display_day()
 
