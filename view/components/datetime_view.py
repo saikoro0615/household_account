@@ -12,17 +12,17 @@ class DateTimeView(tk.Frame):
       self.grid_columnconfigure(i, weight=1)
 
     #ラベル
-    date_lebel = tk.Label(self, text="日付", font=("Arial", 20),bd=2, relief="solid")
-    date_lebel.grid(row=0, column=0, sticky="nsew")
+    self.date_lebel = tk.Label(self, text="日付", font=("Arial", 20),bd=2, relief="solid")
+    self.date_lebel.grid(row=0, column=0, sticky="nsew")
 
     #日付をプラスするボタン
-    add_day_button = tk.Button(self, text="▶")
-    add_day_button.grid(row=0, column=5, padx=10, pady=10, sticky="nsew")
+    self.add_day_button = tk.Button(self, text="▶")
+    self.add_day_button.grid(row=0, column=5, padx=10, pady=10, sticky="nsew")
 
     #日付をマイナスするボタン
-    sub_day_button = tk.Button(self, text="◀")
-    sub_day_button.grid(row=0, column=1, padx=10, pady=10, sticky="nsew")
+    self.sub_day_button = tk.Button(self, text="◀")
+    self.sub_day_button.grid(row=0, column=1, padx=10, pady=10, sticky="nsew")
 
     #日付を表示するラベル
-    dateView_label = tk.Label(self, text="test", font=("Arial", 20),bd=2, relief="solid" )
-    dateView_label.grid(columnspan=3, row=0, column=2, padx=10,pady=10,sticky="nsew")
+    self.dateView_label = tk.Label(self, text="test", font=("Arial", 20),bd=2, relief="solid" )
+    self.dateView_label.grid(columnspan=3, row=0, column=2, padx=10,pady=10,sticky="nsew")

@@ -1,0 +1,22 @@
+from view.input_view import InputView
+from model.datemanager_model import DateManagerModel
+from model.database_model import DataBaseModel
+
+
+class InputViewController():
+  def __init__(self,):
+    self.date_model = DateManagerModel()
+    self.database_model = DataBaseModel()
+    self.input_view = InputView()
+  
+  def add_day(self):
+    """表示する日付を一日増やす"""
+    self.input_view.dateView_label.add_day_button.config(command=self.date_model.add_day())
+    self.display_day()
+  def sub_day(self):
+    """表示する日付を一日減らす"""
+    self.input_view.dateView_label.sub_day_button.config(command=self.date_model.subtract_day())
+    self.display_day()
+  def display_day(self):
+    """日付を更新する"""
+    self.input_view.dateView_label.dateView_label.config(text=self.date_model.current_day)

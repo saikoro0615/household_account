@@ -1,62 +1,14 @@
-import sqlite3
+
 from datetime import date, timedelta
 
 class Model:
   def __init__(self):
-    #データベース作成
-    self.db_name="household.db"
-    self._open_db()
-    #外部キー有効化
-    self.cursor.execute("PRAGMA foreign_keys= ON;")
-    #categoriesテーブル作成
-    self.cursor.execute("""
-    CREATE TABLE IF NOT EXISTS categories(
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT NOT NULL,
-      type TEXT NOT NULL CHECK(type IN ('income','expense'))
-    );
-    """)
-    #transactionsテーブル作成
-    self.cursor.execute("""
-    CREATE TABLE IF NOT EXISTS transactions(
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      date TEXT NOT NULL,
-      amount INTEGER NOT NULL,
-      category_id INTEGER NOT NULL,
-      memo TEXT,
-      FOREIGN KEY (category_id) REFERENCES categories(id)
-        ON DELETE CASCADE
-    );
-    """)
-    self._close_db()
+    pass
 
-    #今日の日付
-    self.current_day = date.today()
 
-  def _open_db(self):
-    """データベースにアクセスしてカーソルを作る関数"""
-    self.conn = sqlite3.connect(self.db_name)
-    self.cursor =self.conn.cursor()
 
-  def _close_db(self):
-    """データベースのコミットと接続終了する関数"""
-    self.conn.commit()
-    self.conn.close()
 
-  def insert_category(self, name, type):
-    """categoriesテーブルにデータを登録"""
-    self._open_db()
-    try:
-      self.cursor.execute("""INSERT INTO categories (name, type) VALUES (?, ?)""",(name, type))
-    except sqlite3.IntegrityError:
-      print("typeは'income'もしくは'expense'のみです")
-    self._close_db()
 
-  def insert_transactions(self, date, amount, category_id, memo):
-    """transactionsテーブルにデータを登録"""
-    self._open_db()
-    self.cursor.execute("""INSERT INTO transactions (date, amount, category_id, memo) VALUES (?, ?, ?, ?)""",(date, amount, category_id, memo))
-    self._close_db()
 
   def delete_category(self, category_id):
     """categoriesテーブルからデータを削除"""
@@ -114,16 +66,7 @@ class Model:
     return (income - expense)
   
   #日数に関係する関数
-  def get_day(self):
-    return self.current_day
 
-  def add_day(self):
-    """表示用の日付を一日増やす"""
-    self.current_day += timedelta(days=1)
-
-  def subtract_day(self):
-    """表示用の日付を一日減らす"""
-    self.current_day -= timedelta(days=1)
 
 #デバッグ用
 if __name__ == "__main__":

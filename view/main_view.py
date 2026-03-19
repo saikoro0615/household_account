@@ -32,9 +32,9 @@ class MainView(tk.Tk):
       frame.grid(row=0, column=0, sticky="nsew")
     
     #初期状態はinput画面を表示
-    # self.show_frame("input")
+    self.show_frame("input")
     #デバッグ用（ほかの画面を表示）
-    self.show_frame("conf")
+    # self.show_frame("conf")
 
   
   def show_frame(self, name):

@@ -1,0 +1,43 @@
+import sqlite3
+
+class DataBaseModel():
+  def __init__(self):
+        #データベース作成
+    self.db_name="household.db"
+    self.conn = sqlite3.connect(self.db_name)
+    self.cursor = self.conn.cursor()
+    #外部キー有効化
+    self.cursor.execute("PRAGMA foreign_keys= ON;")
+    #categoriesテーブル作成
+    self.cursor.execute("""
+    CREATE TABLE IF NOT EXISTS categories(
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      type TEXT NOT NULL CHECK(type IN ('income','expense'))
+    );
+    """)
+    #transactionsテーブル作成
+    self.cursor.execute("""
+    CREATE TABLE IF NOT EXISTS transactions(
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      date TEXT NOT NULL,
+      amount INTEGER NOT NULL,
+      category_id INTEGER NOT NULL,
+      memo TEXT,
+      FOREIGN KEY (category_id) REFERENCES categories(id)
+        ON DELETE CASCADE
+    );
+    """)
+    
+  def insert_category(self, name, type):
+    """categoriesテーブルにデータを登録"""
+    try:
+      self.cursor.execute("""INSERT INTO categories (name, type) VALUES (?, ?)""",(name, type))
+    except sqlite3.IntegrityError:
+      print("typeは'income'もしくは'expense'のみです")
+
+  def insert_transactions(self, date, amount, category_id, memo):
+    """transactionsテーブルにデータを登録"""
+    self.cursor.execute("""INSERT INTO transactions (date, amount, category_id, memo) VALUES (?, ?, ?, ?)""",(date, amount, category_id, memo))
+  
+  

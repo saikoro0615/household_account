@@ -1,10 +1,10 @@
 from model import Model
-from view.test import View
+from view.main_view import MainView
 from controller import Controller
 
 def main():
   model = Model()
-  view = View()
+  view = MainView()
   controller = Controller(model, view)
 
 if __name__ == "__main__":
