@@ -3,7 +3,7 @@ from view.input_view import InputView
 from view.conf_view import ConfView
 
 class MainView(tk.Tk):
-  def __init__(self):
+  def __init__(self, go_input, go_conf):
     super().__init__()
 
     #ウィンドウタイトル
@@ -24,17 +24,17 @@ class MainView(tk.Tk):
     #画面を追加
     self.frames = {}
 
-    self.frames["input"] = InputView(container)
-    self.frames["conf"] = ConfView(container)
+    self.frames["input"] = InputView(container, go_input, go_conf)
+    self.frames["conf"] = ConfView(container, go_input, go_conf)
 
     #追加した画面を配置
     for frame in self.frames.values():
       frame.grid(row=0, column=0, sticky="nsew")
     
     #初期状態はinput画面を表示
-    # self.show_frame("input")
+    self.show_frame("input")
     #デバッグ用（ほかの画面を表示）
-    self.show_frame("conf")
+    # self.show_frame("conf")
 
   
   def show_frame(self, name):

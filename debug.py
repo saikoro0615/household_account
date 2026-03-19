@@ -7,7 +7,7 @@ from model.database_model import DataBaseModel
 class Debug():
   def __init__(self):
     # View生成
-    self.view = MainView()
+    self.view = MainView(self.go_input, self.go_conf)
     self.date_model = DateManagerModel()
     self.db_model = DataBaseModel()
 
@@ -25,6 +25,12 @@ class Debug():
 
   def run(self):
     self.view.mainloop()
+
+  def go_input(self):
+    self.view.show_frame("input")
+  
+  def go_conf(self):
+    self.view.show_frame("conf")
 
 if __name__ == "__main__":
   app = Debug()

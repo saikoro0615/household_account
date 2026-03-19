@@ -9,7 +9,7 @@ from view.components.month_list import MonthIncAndExpListView
 
 
 class ConfView(tk.Frame):
-  def __init__(self, master):
+  def __init__(self, master, go_input, go_conf):
     super().__init__(master)
 
     #グリッド設計（4列8行）
@@ -19,7 +19,7 @@ class ConfView(tk.Frame):
       self.grid_rowconfigure(i, weight=1)
 
       #画面切り替えボタン
-    self.confChangePageButtons = ChangePageButtons(self)
+    self.confChangePageButtons = ChangePageButtons(self, go_input, go_conf)
     self.confChangePageButtons.grid(rowspan=2,row=0, column=0, padx=10, pady=10, sticky="nsew")
     #日付表示ラベル（月）
     self.monthView_label = DateTimeView(self)
