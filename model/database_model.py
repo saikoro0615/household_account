@@ -2,7 +2,7 @@ import sqlite3
 
 class DataBaseModel():
   def __init__(self):
-        #データベース作成
+    #データベース作成
     self.db_name="household.db"
     self.conn = sqlite3.connect(self.db_name)
     self.cursor = self.conn.cursor()
@@ -28,7 +28,12 @@ class DataBaseModel():
         ON DELETE CASCADE
     );
     """)
+
+    #後で消す
+    self.conn.commit()
+    self.conn.close()
     
+
   def insert_category(self, name, type):
     """categoriesテーブルにデータを登録"""
     try:
@@ -39,5 +44,4 @@ class DataBaseModel():
   def insert_transactions(self, date, amount, category_id, memo):
     """transactionsテーブルにデータを登録"""
     self.cursor.execute("""INSERT INTO transactions (date, amount, category_id, memo) VALUES (?, ?, ?, ?)""",(date, amount, category_id, memo))
-  
   

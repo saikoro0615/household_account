@@ -24,5 +24,5 @@ class DateTimeView(tk.Frame):
     self.sub_day_button.grid(row=0, column=1, padx=10, pady=10, sticky="nsew")
 
     #日付を表示するラベル
-    self.dateView_label = tk.Label(self, text="test", font=("Arial", 20),bd=2, relief="solid" )
+    self.dateView_label = tk.Label(self, text="", font=("Arial", 20),bd=2, relief="solid" )
     self.dateView_label.grid(columnspan=3, row=0, column=2, padx=10,pady=10,sticky="nsew")
