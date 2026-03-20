@@ -15,3 +15,17 @@ class IncomeOrExpense(tk.Frame):
     #支出ボタン
     self.expense_button = tk.Button(self,text="支出",bg="lightblue", font=("Arial", 20),bd=2)
     self.expense_button.grid(row=0, column=1, padx=10,pady=10,sticky="nsew")
+
+  #モードによってボタンの色を変更
+  def set_mode(self, mode):
+    if mode == "income":
+      self.income_button.config(bg="lightblue")
+      self.expense_button.config(bg="lightgray")
+    else:
+      self.income_button.config(bg="lightgray")
+      self.expense_button.config(bg="lightblue")
+
+  #income,expenseボタンを押したときのコマンド設定
+  def bind(self, on_income, on_expense):
+    self.income_button.config(command=on_income)
+    self.expense_button.config(command=on_expense)

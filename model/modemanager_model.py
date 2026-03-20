@@ -7,8 +7,6 @@ class ModeManagerModel():
   
   def change_expense_mode(self):
     self.category_mode = "expense"
-    print(self.category_mode)
 
   def change_income_mode(self):
     self.category_mode = "income"
-    print(self.category_mode)
