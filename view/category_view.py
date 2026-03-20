@@ -1,6 +1,7 @@
 import tkinter as tk
 
 from view.components.change_page_buttons import ChangePageButtons
+from view.components.income_or_expense import IncomeOrExpense
 
 class CategoryView(tk.Frame):
   """カテゴリー登録用のViewクラス"""
@@ -16,3 +17,6 @@ class CategoryView(tk.Frame):
     #画面切り替え用ボタン
     self.inputChangePageButtons = ChangePageButtons(self, buttons)
     self.inputChangePageButtons.grid(rowspan=2,row=0, column=0, padx=10, pady=10, sticky="nsew")
+    #収入, 支出ボタン
+    self.income_or_expense_button = IncomeOrExpense(self)
+    self.income_or_expense_button.grid(columnspan=2,row=0, column=1,padx=10,pady=10,sticky="nsew")
