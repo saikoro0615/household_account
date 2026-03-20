@@ -7,7 +7,8 @@ from view.components.amount_view import AmountView
 
 
 class InputView(tk.Frame):
-  def __init__(self, master, go_input, go_conf):
+  """収支登録用のViewクラス"""
+  def __init__(self, master, buttons):
     super().__init__(master)
 
     #グリッド設計（4列8行）
@@ -17,7 +18,7 @@ class InputView(tk.Frame):
       self.grid_rowconfigure(i, weight=1)
 
     #画面切り替え用ボタン
-    self.inputChangePageButtons = ChangePageButtons(self, go_input, go_conf)
+    self.inputChangePageButtons = ChangePageButtons(self, buttons)
     self.inputChangePageButtons.grid(rowspan=2,row=0, column=0, padx=10, pady=10, sticky="nsew")
     #収入ボタン
     self.income_button = tk.Button(self,text="収入",bg="lightblue", font=("Arial", 20),bd=2)

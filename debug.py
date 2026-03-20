@@ -7,7 +7,12 @@ from model.database_model import DataBaseModel
 class Debug():
   def __init__(self):
     # View生成
-    self.view = MainView(self.go_input, self.go_conf)
+    buttons = [
+      ("１：書き込み", self.go_input),
+      ("２：カレンダー", self.go_conf),
+      ("３：カテゴリー", self.go_category)
+    ]
+    self.view = MainView(buttons)
     self.date_model = DateManagerModel()
     self.db_model = DataBaseModel()
 
@@ -31,6 +36,8 @@ class Debug():
   
   def go_conf(self):
     self.view.show_frame("conf")
+  def go_category(self):
+    self.view.show_frame("category")
 
 if __name__ == "__main__":
   app = Debug()

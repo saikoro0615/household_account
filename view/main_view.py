@@ -1,9 +1,10 @@
 import tkinter as tk
 from view.input_view import InputView
 from view.conf_view import ConfView
+from view.category_view import CategoryView
 
 class MainView(tk.Tk):
-  def __init__(self, go_input, go_conf):
+  def __init__(self, buttons):
     super().__init__()
 
     #ウィンドウタイトル
@@ -24,8 +25,9 @@ class MainView(tk.Tk):
     #画面を追加
     self.frames = {}
 
-    self.frames["input"] = InputView(container, go_input, go_conf)
-    self.frames["conf"] = ConfView(container, go_input, go_conf)
+    self.frames["input"] = InputView(container, buttons)
+    self.frames["conf"] = ConfView(container, buttons)
+    self.frames["category"] = CategoryView(container, buttons)
 
     #追加した画面を配置
     for frame in self.frames.values():
