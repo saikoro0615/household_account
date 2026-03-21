@@ -6,6 +6,11 @@ class DataBaseModel():
     self.db_name="household.db"
     self.conn = sqlite3.connect(self.db_name)
     self.cursor = self.conn.cursor()
+    
+    self.create_tabels()
+
+
+  def create_tabels(self):
     #外部キー有効化
     self.cursor.execute("PRAGMA foreign_keys= ON;")
     #categoriesテーブル作成
@@ -28,11 +33,8 @@ class DataBaseModel():
         ON DELETE CASCADE
     );
     """)
-
-    #後で消す
     self.conn.commit()
-    self.conn.close()
-    
+
 
   def insert_category(self, name, type):
     """categoriesテーブルにデータを登録"""
@@ -40,6 +42,11 @@ class DataBaseModel():
       self.cursor.execute("""INSERT INTO categories (name, type) VALUES (?, ?)""",(name, type))
     except sqlite3.IntegrityError:
       print("typeは'income'もしくは'expense'のみです")
+
+  def get_category(self, type):
+    self.items = self.cursor.execute("""SELECT name FROM categories WHERE type=?""",(type,))
+    rows = self.items.fetchall()
+    return [row[0] for row in rows]
 
   def insert_transactions(self, date, amount, category_id, memo):
     """transactionsテーブルにデータを登録"""

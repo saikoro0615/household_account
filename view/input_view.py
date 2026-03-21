@@ -5,6 +5,7 @@ from view.components.income_or_expense import IncomeOrExpense
 from view.components.datetime_view import DateTimeView
 from view.components.memo_view import MemoView
 from view.components.amount_view import AmountView
+from view.components.categorybox_view import CategoryBoxView
 
 
 class InputView(tk.Frame):
@@ -34,7 +35,7 @@ class InputView(tk.Frame):
     self.amount_textbox = AmountView(self)
     self.amount_textbox.grid(columnspan=2, row=3, column=1, padx=10,pady=10,sticky="nsew")
     #カテゴリリストボックス
-    self.category_listbox = tk.Listbox(self)
+    self.category_listbox = CategoryBoxView(self)
     self.category_listbox.grid(rowspan=3,columnspan=2,row=4,column=1,padx=10,pady=10,sticky="nsew")
     #データ登録ボタン
     self.data_regist_buttons = tk.Button(self, text="データ登録",bg="lightblue",font=("Arial", 20),bd=2)

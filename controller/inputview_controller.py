@@ -12,10 +12,12 @@ class InputViewController(ModeContrllerMixin):
     self.mode_model = mode_model #ModeManagerModel()
     self.bind_events()
     self.display_day()
+    self.update_categorybox()
 
     self.setup_mode_buttons(
       self.input_view.income_or_expense_button,
-      self.mode_model
+      self.mode_model,
+      self.update_categorybox
     )
 
   def bind_events(self):
@@ -39,4 +41,11 @@ class InputViewController(ModeContrllerMixin):
     self.input_view.dateView_label.dateView_label.config(
       text=self.date_model.get_day()
     )
+
+  def update_categorybox(self):
+    """カテゴリーボックスを更新する関数"""
+    self.type = self.mode_model.get_category_mode()
+    self.items = self.database_model.get_category(self.type)
+    self.input_view.category_listbox.update_listbox(self.items)
+
   

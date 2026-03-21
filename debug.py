@@ -41,6 +41,7 @@ class Debug():
 
 
   def run(self):
+    self.view.protocol("WM_DELETE_WINDOW", self.db_close)
     self.view.mainloop()
 
   def go_input(self):
@@ -49,6 +50,10 @@ class Debug():
     self.view.show_frame("conf")
   def go_category(self):
     self.view.show_frame("category")
+
+  def db_close(self):
+    self.db_model.conn.close()
+    self.view.destroy()
 
 if __name__ == "__main__":
   app = Debug()
