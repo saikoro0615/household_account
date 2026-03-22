@@ -40,8 +40,10 @@ class DataBaseModel():
     """categoriesテーブルにデータを登録"""
     try:
       self.cursor.execute("""INSERT INTO categories (name, type) VALUES (?, ?)""",(name, type))
+      self.conn.commit()
+      return True
     except sqlite3.IntegrityError:
-      print("typeは'income'もしくは'expense'のみです")
+      return False
 
   def get_category(self, type):
     self.items = self.cursor.execute("""SELECT name FROM categories WHERE type=?""",(type,))
