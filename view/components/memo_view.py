@@ -16,4 +16,4 @@ class MemoView(tk.Frame):
     memo_label.grid(row=0, column=0, sticky="nsew")
     #メモ記入用のテキストボックス
     self.memo_text = tk.Entry(self)
-    self.memo_text.grid(columnspan=5,row=0,column=1, padx=10,pady=10,sticky="nsew")
+    self.memo_text.grid(columnspan=5,row=0,column=1, padx=10, sticky="nsew")

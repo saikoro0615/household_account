@@ -19,16 +19,20 @@ class CategoryViewController(ModeContrllerMixin):
       self.mode_model
     )
     #登録ボタンを押すことでcategoriesテーブルに登録
-    self.category_view.category_regist.category_button.config(command=self.add_categorys)
+    self.category_view.category_regist.category_button.config(command=self.add_categories)
 
   
-  def add_categorys(self):
-    #カテゴリーテーブルにセットする名前とタイプ（income or expense）を受け取る
+  def add_categories(self):
+    """categoriesテーブルに登録する関数"""
     self.name = self.category_view.category_regist.category_textbox.get()
     if not self.name:
       messagebox.showwarning("入力エラー", "カテゴリー名が空です。入力してください。")
+      return
+    #カテゴリーテーブルにセットする名前とタイプ（income or expense）を受け取る
     self.type = self.mode_model.get_category_mode()
     #モデルに渡して登録
     self.db_model.insert_category(self.name, self.type)
     #Viewのテキストボックスをクリアする
     self.category_view.category_regist.category_textbox.delete(0, tk.END)
+    #完了したときにメッセージボックスで知らせる
+    messagebox.showinfo("登録完了","登録しました")

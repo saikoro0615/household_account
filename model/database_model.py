@@ -46,11 +46,17 @@ class DataBaseModel():
       return False
 
   def get_category(self, type):
-    self.items = self.cursor.execute("""SELECT name FROM categories WHERE type=?""",(type,))
+    """指定したtypeのidとnameを取得"""
+    self.items = self.cursor.execute("""SELECT id, name FROM categories WHERE type=?""",(type,))
     rows = self.items.fetchall()
-    return [row[0] for row in rows]
+    return rows
 
   def insert_transactions(self, date, amount, category_id, memo):
     """transactionsテーブルにデータを登録"""
-    self.cursor.execute("""INSERT INTO transactions (date, amount, category_id, memo) VALUES (?, ?, ?, ?)""",(date, amount, category_id, memo))
+    try:
+      self.cursor.execute("""INSERT INTO transactions (date, amount, category_id, memo) VALUES (?, ?, ?, ?)""",(date, amount, category_id, memo))
+      self.conn.commit()
+      return True
+    except sqlite3.IntegrityError:
+      return False
   

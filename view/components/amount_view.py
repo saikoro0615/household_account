@@ -11,9 +11,9 @@ class AmountView(tk.Frame):
       self.grid_columnconfigure(i, weight=1)
     
     #ラベル
-    amount_label = tk.Label(self, text="金額", font=("Arial", 20),bd=2, relief="solid")
-    amount_label.grid(row=0, column=0, sticky="nsew")
+    self.amount_label = tk.Label(self, text="金額", font=("Arial", 20),bd=2, relief="solid")
+    self.amount_label.grid(row=0, column=0, sticky="nsew")
 
     #テキストボックス
-    amount_text = tk.Entry(self)
-    amount_text.grid(columnspan=5, row=0, column=1, padx=10,pady=10,sticky="nsew")
+    self.amount_text = tk.Entry(self)
+    self.amount_text.grid(columnspan=5, row=0, column=1, padx=10,sticky="nsew")
