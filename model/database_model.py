@@ -11,6 +11,7 @@ class DataBaseModel():
 
 
   def create_tabels(self):
+    """テーブルを作成"""
     #外部キー有効化
     self.cursor.execute("PRAGMA foreign_keys= ON;")
     #categoriesテーブル作成
@@ -46,7 +47,7 @@ class DataBaseModel():
       return False
 
   def get_category(self, type):
-    """指定したtypeのidとnameを取得"""
+    """指定したtypeのidとnameをcategoriesテーブルから取得"""
     self.items = self.cursor.execute("""SELECT id, name FROM categories WHERE type=?""",(type,))
     rows = self.items.fetchall()
     return rows
@@ -60,3 +61,21 @@ class DataBaseModel():
     except sqlite3.IntegrityError:
       return False
   
+  def get_totalamount_by_month(self, month, type=None):
+    """transactionsテーブルから指定した月とタイプのamountの合計を取得"""
+    #テーブルから受け取るアイテムの指定
+    query = """
+        SELECT SUM(t.amount)
+        FROM transactions t
+        JOIN categories c ON t.category_id = c.id
+        WHERE t.date LIKE ?
+    """
+    #パラメータの指定
+    params = [f"{month}%"]
+    if type in ("income", "expense"):
+      query += """AND c.type = ?"""
+      params.append(type)
+
+    self.cursor.execute(query,params)
+    result = self.cursor.fetchone()[0]
+    return result if result is not None else 0

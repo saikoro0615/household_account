@@ -29,7 +29,6 @@ class ConfView(tk.Frame):
     self.calendar = CalendarView(self)
     self.calendar.grid(rowspan=3, columnspan=3, row=1, column=1, padx=10, pady=10, sticky="nsew")
 
-
     #総収入表示ラベル
     self.totalIncome_label = IncomeAndExpenseView(self)
     self.totalIncome_label.incAndExp_label.config(fg="Blue")

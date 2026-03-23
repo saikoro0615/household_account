@@ -23,4 +23,4 @@ class CategoryView(tk.Frame):
     self.income_or_expense_button.grid(columnspan=2,row=0, column=1,padx=10,pady=10,sticky="nsew")
     #カテゴリー登録用ボックスとボタン
     self.category_regist = CategoryLabelView(self)
-    self.category_regist.grid(columnspan=3, row=4, column=1, padx=10, pady=10, sticky="nsew")
+    self.category_regist.grid(columnspan=2, row=4, column=1, padx=10, pady=10, sticky="nsew")
