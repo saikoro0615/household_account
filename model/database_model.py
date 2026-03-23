@@ -79,3 +79,18 @@ class DataBaseModel():
     self.cursor.execute(query,params)
     result = self.cursor.fetchone()[0]
     return result if result is not None else 0
+  
+  def get_category_and_amount_list(self, month):
+    """指定した月の日付とカテゴリーのnameとtype,amountとmemoを取得"""
+    #テーブルから受け取るアイテムの指定
+    query = """
+        SELECT t.date, c.name, c.type, t.amount, t.memo
+        FROM transactions t
+        JOIN categories c ON t.category_id = c.id
+        WHERE t.date LIKE ?
+        ORDER BY t.date
+    """
+    #パラメータの指定
+    params = [f"{month}%"]
+
+    return self.cursor.execute(query, params).fetchall()

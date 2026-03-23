@@ -32,14 +32,14 @@ class ConfView(tk.Frame):
     #総収入表示ラベル
     self.totalIncome_label = IncomeAndExpenseView(self)
     self.totalIncome_label.incAndExp_label.config(fg="Blue")
-    self.totalIncome_label.grid(row=4, column=1, padx=10, pady=10, sticky="nsew")
+    self.totalIncome_label.grid(row=4, column=1, padx=10, sticky="nsew")
     #総支出表示ラベル
     self.totalExpense_label = IncomeAndExpenseView(self)
     self.totalExpense_label.incAndExp_label.config(fg="Red")
-    self.totalExpense_label.grid(row=4, column=2, padx=10, pady=10, sticky="nsew")
+    self.totalExpense_label.grid(row=4, column=2, padx=10, sticky="nsew")
     #総収支表示ラベル
     self.totalIncAndExp_label = IncomeAndExpenseView(self)
-    self.totalIncAndExp_label.grid(row=4, column=3, padx=10, pady=10, sticky="nsew")
+    self.totalIncAndExp_label.grid(row=4, column=3, padx=10, sticky="nsew")
     #月間収支リスト
-    self.mounthIncAndExp_list = MonthIncAndExpListView(self)
-    self.mounthIncAndExp_list.grid(rowspan=3, columnspan=3, row=5, column=1, padx=10, pady=10, sticky="nsew")
+    self.monthIncAndExp_list = MonthIncAndExpListView(self)
+    self.monthIncAndExp_list.grid(rowspan=3, columnspan=3, row=5, column=1, padx=10, pady=10, sticky="nsew")

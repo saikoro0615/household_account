@@ -1,3 +1,5 @@
+import tkinter as tk
+
 from view.conf_view import ConfView
 from model.datemanager_model import DateManagerModel
 from model.database_model import DataBaseModel
@@ -31,8 +33,9 @@ class ConfViewController():
       text=self.date_model.get_month()
     )
     self.update_total_amount_label()
+    self.update_month_blance_list()
 
-  #総収入、総収支の表示
+  """総収入、総収支の表示"""
   def update_total_amount_label(self):
     month = self.date_model.get_month()
 
@@ -54,3 +57,20 @@ class ConfViewController():
     else:
       color = "Blue"
     self.conf_view.totalIncAndExp_label.incAndExp_label.config(text=f"{blance}円", fg=color)
+
+  """月間収支リストの表示"""
+  def update_month_blance_list(self):
+    #リスト初期化
+    self.conf_view.monthIncAndExp_list.monthlist.delete(0, tk.END)
+    #リストに挿入するデータを取得
+    data = self.db_model.get_category_and_amount_list(self.date_model.get_month())
+    #リストに挿入
+    for i, (date, name, type, amount, memo) in enumerate(data):
+      text = f"{date} | {name} | {memo} | {amount}円"
+
+      self.conf_view.monthIncAndExp_list.monthlist.insert(tk.END, text)
+      #typeがincomeの場合青、expenseの場合赤
+      if type == "income":
+        self.conf_view.monthIncAndExp_list.monthlist.itemconfig(i, fg="Blue")
+      else:
+        self.conf_view.monthIncAndExp_list.monthlist.itemconfig(i, fg="Red")

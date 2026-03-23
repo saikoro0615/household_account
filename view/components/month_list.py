@@ -9,5 +9,5 @@ class MonthIncAndExpListView(tk.Frame):
     self.grid_rowconfigure(0, weight=1)
 
     #リストボックス（テスト用）
-    self.mountlist = tk.Listbox(self)
-    self.mountlist.grid(row=0, column=0, sticky="nsew")
+    self.monthlist = tk.Listbox(self,font=("Arial", 20))
+    self.monthlist.grid(row=0, column=0, sticky="nsew")
