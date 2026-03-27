@@ -1,6 +1,7 @@
 import tkinter as tk
 
 from view.conf_view import ConfView
+from view.components.calendar_view import CalendarView
 from model.datemanager_model import DateManagerModel
 from model.database_model import DataBaseModel
 
@@ -8,7 +9,7 @@ class ConfViewController():
   def __init__(self, conf_view, date_model, db_model):
     self.conf_view = conf_view #ConfView()
     self.date_model = date_model #DateManagerModel()
-    self.db_model = db_model #DataBaseModel()
+    self.db_model = db_model # DataBaseModel()
     self.bind_events()
     self.display_month()
   #ボタンにコマンドをセットする
@@ -32,6 +33,7 @@ class ConfViewController():
     self.conf_view.monthView_label.dateView_label.config(
       text=self.date_model.get_month()
     )
+    self.update_calender()
     self.update_total_amount_label()
     self.update_month_blance_list()
 
@@ -74,3 +76,18 @@ class ConfViewController():
         self.conf_view.monthIncAndExp_list.monthlist.itemconfig(i, fg="Blue")
       else:
         self.conf_view.monthIncAndExp_list.monthlist.itemconfig(i, fg="Red")
+  
+  """カレンダーの表示"""
+  def update_calender(self):
+    month_str = self.date_model.get_month()
+    #年と月に分離
+    year, month = map(int, month_str.split("-"))
+    #表示用のデータ
+    data = self.db_model.get_calender_data(month_str)
+
+    #カレンダーを削除して、新規作成
+    if self.conf_view.calendar:
+      self.conf_view.calendar.destroy()
+    self.conf_view.calendar = CalendarView(self.conf_view.calendar_frame, year, month, data)
+    self.conf_view.calendar.grid(row=0,column=0,sticky="nsew")
+    self.conf_view.calendar.pack(expand=True, fill="both")

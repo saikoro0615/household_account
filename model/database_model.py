@@ -94,3 +94,33 @@ class DataBaseModel():
     params = [f"{month}%"]
 
     return self.cursor.execute(query, params).fetchall()
+  
+  def get_calender_data(self, month):
+    """
+    カレンダー表示用データを取得
+    {day:[{type:total_amount},...],...}の形
+    """
+    #テーブルから受け取るデータの指定
+    query = """
+        SELECT substr(t.date, 9, 2), t.amount, c.type
+        FROM transactions t
+        JOIN categories c ON t.category_id = c.id
+        WHERE t.date LIKE ?
+        ORDER BY date
+    """
+    #パラメータの指定
+    params = [f"{month}%"]
+    rows = self.cursor.execute(query, params).fetchall()
+    #同じ日付の同じタイプのamountはすべて足す
+    data = {}
+    for day, amount, type in rows:
+      #日付がデータにない場合作成
+      if day  not in data:
+        data[day] = {}
+      #typeがなければ作成、ある場合加算
+      if type in data[day]:
+        data[day][type] += amount
+      else:
+        data[day][type] = amount
+
+    return data
