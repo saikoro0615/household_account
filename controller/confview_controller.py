@@ -47,9 +47,10 @@ class ConfViewController():
     #収支
     blance = income - expense
     #viewに反映
+    #総収入の更新
     self.conf_view.totalIncome_label.display_label.config(text="総収入")
     self.conf_view.totalIncome_label.incAndExp_label.config(text=f"{income}円")
-
+    #総支出の更新
     self.conf_view.totalExpense_label.display_label.config(text="総支出")
     self.conf_view.totalExpense_label.incAndExp_label.config(text=f"{expense}円")
     #もしblanceがプラスだと青、マイナスだと赤色に変更
@@ -84,10 +85,5 @@ class ConfViewController():
     year, month = map(int, month_str.split("-"))
     #表示用のデータ
     data = self.db_model.get_calender_data(month_str)
-
-    #カレンダーを削除して、新規作成
-    if self.conf_view.calendar:
-      self.conf_view.calendar.destroy()
-    self.conf_view.calendar = CalendarView(self.conf_view.calendar_frame, year, month, data)
-    self.conf_view.calendar.grid(row=0,column=0,sticky="nsew")
-    self.conf_view.calendar.pack(expand=True, fill="both")
+    #カレンダーを更新
+    self.conf_view.set_calendar(year, month, data)

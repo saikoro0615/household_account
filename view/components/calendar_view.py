@@ -11,16 +11,23 @@ class CalendarView(tk.Frame):
     self.create_wigets()
 
   def create_wigets(self):
+    #カレンダーを週ごとのリストで返す
+    cal = calendar.monthcalendar(self.year, self.month)
+    #グリッドをカレンダーのサイズに合わせる
+    for i in range(7):
+      self.grid_columnconfigure(i, weight=3)
+    for i in range(len(cal)+1):
+      self.grid_rowconfigure(i, weight=3)
+    
     #曜日表示
     days = ["日", "月", "火", "水", "木", "金", "土"]
     for i, d in enumerate(days):
-      tk.Label(self, text=d, borderwidth=1, relief="solid",width=12).grid(row=0, column=i)
+      tk.Label(self, text=d, borderwidth=1, relief="solid").grid(row=0, column=i, sticky="nsew")
     
-    cal = calendar.monthcalendar(self.year, self.month)
   #カレンダー作成
     for r, week in enumerate(cal, start=1):
       for c, day in enumerate(week):
-        frame = tk.Frame(self, borderwidth=1, relief="solid", width=120, height=80)
+        frame = tk.Frame(self, borderwidth=1, relief="solid")
         frame.grid(row=r, column=c,sticky="nsew")
         #day=0の時、次の処理へ
         if day == 0:
@@ -38,8 +45,3 @@ class CalendarView(tk.Frame):
             color: str = "blue" if type == "income" else "red"
             
             tk.Label(frame, text=text, fg=color, anchor="w").pack(anchor="w")
-    #グリッドをカレンダーのサイズに合わせる
-    for i in range(7):
-      self.grid_columnconfigure(i, weight=3)
-    for i in range(len(cal)+1):
-      self.grid_rowconfigure(i, weight=3)

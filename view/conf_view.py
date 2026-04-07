@@ -19,10 +19,10 @@ class ConfView(tk.Frame):
 
     self.grid_rowconfigure(0,weight=1)
     
-    self.grid_rowconfigure(1,weight=3)
-    self.grid_rowconfigure(2,weight=3)
-    self.grid_rowconfigure(3,weight=3)
-    self.grid_rowconfigure(4,weight=3)
+    self.grid_rowconfigure(1,weight=5)
+    self.grid_rowconfigure(2,weight=5)
+    self.grid_rowconfigure(3,weight=5)
+    self.grid_rowconfigure(4,weight=5)
 
     self.grid_rowconfigure(5,weight=1)
     self.grid_rowconfigure(6,weight=1)
@@ -36,8 +36,8 @@ class ConfView(tk.Frame):
     self.monthView_label.grid(columnspan=3, row=0, column=1, padx=10, pady=10, sticky="nsew")
     #カレンダー
     self.calendar = None
-    self.calendar_frame = tk.Frame(self)
-    self.calendar_frame.grid(rowspan=4, columnspan=3, row=1, column=1, padx=10, pady=10, sticky="nsew")
+    # self.calendar_frame = tk.Frame(self)
+    # self.calendar_frame.grid(rowspan=4, columnspan=3, row=1, column=1, sticky="nsew")
 
     #総収入表示ラベル
     self.totalIncome_label = IncomeAndExpenseView(self)
@@ -52,4 +52,11 @@ class ConfView(tk.Frame):
     self.totalIncAndExp_label.grid(row=5, column=3, padx=10, sticky="nsew")
     #月間収支リスト
     self.monthIncAndExp_list = MonthIncAndExpListView(self)
-    self.monthIncAndExp_list.grid(rowspan=2, columnspan=3, row=6, column=1, padx=10, pady=10, sticky="nsew")
+    self.monthIncAndExp_list.grid(rowspan=3, row=3, column=0, padx=10, pady=10, sticky="nsew")
+
+  def set_calendar(self, year, month, data):
+    #カレンダーを削除して、新規作成
+    if self.calendar:
+      self.calendar.destroy()
+    self.calendar = CalendarView(self, year, month, data)
+    self.calendar.grid(rowspan=4, columnspan=3, row=1, column=1, sticky="nsew")
