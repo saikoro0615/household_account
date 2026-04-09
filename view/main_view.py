@@ -2,6 +2,7 @@ import tkinter as tk
 from view.input_view import InputView
 from view.conf_view import ConfView
 from view.category_view import CategoryView
+from view.report_view import ReportView
 
 class MainView(tk.Tk):
   def __init__(self, buttons):
@@ -10,7 +11,7 @@ class MainView(tk.Tk):
     #ウィンドウタイトル
     self.title("家計簿アプリ")
     #ウィンドウの大きさ
-    self.geometry("800x600")
+    self.geometry("1000x800")
     #ウィンドウのグリッドを１ｘ１にする
     self.grid_rowconfigure(0, weight=1)
     self.grid_columnconfigure(0, weight=1)
@@ -28,6 +29,7 @@ class MainView(tk.Tk):
     self.frames["input"] = InputView(container, buttons)
     self.frames["conf"] = ConfView(container, buttons)
     self.frames["category"] = CategoryView(container, buttons)
+    self.frames["report"] = ReportView(container, buttons)
 
     #追加した画面を配置
     for frame in self.frames.values():

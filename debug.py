@@ -1,6 +1,7 @@
 from controller.inputview_controller import InputViewController
 from controller.confview_controller import ConfViewController
 from controller.categoryview_controller import CategoryViewController
+from controller.reportview_controller import ReportViewController
 from view.main_view import MainView
 from model.datemanager_model import DateManagerModel
 from model.database_model import DataBaseModel
@@ -12,7 +13,8 @@ class Debug():
     buttons = [
       ("１：書き込み", self.go_input),
       ("２：カレンダー", self.go_conf),
-      ("３：カテゴリー", self.go_category)
+      ("３：カテゴリー", self.go_category),
+      ("４：レポート", self.go_report)
     ]
     self.view = MainView(buttons)
     self.date_model = DateManagerModel()
@@ -39,6 +41,11 @@ class Debug():
       self.mode_model
     )
 
+    self.report_controller = ReportViewController(
+      self.view.frames["report"],
+      self.date_model
+    )
+
 
   def run(self):
     self.view.protocol("WM_DELETE_WINDOW", self.db_close)
@@ -50,9 +57,12 @@ class Debug():
     self.view.show_frame("conf")
   def go_category(self):
     self.view.show_frame("category")
+  def go_report(self):
+    self.view.show_frame("report")
 
   def db_close(self):
     self.db_model.conn.close()
+    self.view.quit()
     self.view.destroy()
 
 if __name__ == "__main__":
