@@ -22,7 +22,21 @@ class ReportView(tk.Frame):
     self.monthView_label.grid(columnspan=3, row=0, column=1, padx=10, pady=10, sticky="nsew")
 
     #円グラフ
-    amounts = [100,200,300]#テスト用
-    categories = ["a", "b", "c"]#テスト用
-    self.income_piechart = PieChart(self,amounts, categories)
-    self.income_piechart.grid(rowspan=3, columnspan=3, row=1, column=1, padx=10, pady=10, sticky="nsew")
+    self.income_piechart = None
+
+
+  def set_piechart(self, amounts, categories):
+    #既に設置されていた場合削除
+    if self.income_piechart:
+      self.income_piechart.destroy()
+    #データがあった場合更新
+    if amounts:
+      self.amounts = amounts
+      self.categories = categories
+    #ない場合、0を渡す
+    else:
+      self.amounts = []
+      self.categories = []
+
+    self.income_piechart = PieChart(self,self.amounts, self.categories)
+    self.income_piechart.grid(rowspan=3, columnspan=3, row=2, column=1, padx=10, pady=10, sticky="nsew")

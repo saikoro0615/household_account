@@ -124,3 +124,25 @@ class DataBaseModel():
         data[day][type] = amount
 
     return data
+  
+  def get_piechart_data(self, month, type):
+    """
+    円グラフで使う用のデータを取得
+    価格の多い順でソートする
+    {name1:amount1,name2:amount2,...}の形
+    """
+    #テーブルから受け取るデータの指定
+    query = """
+        SELECT c.name, SUM(t.amount) as amount
+        FROM transactions t
+        JOIN categories c ON t.category_id = c.id
+        WHERE t.date LIKE ?
+        AND c.type = ?
+        GROUP BY c.name
+        ORDER BY amount DESC
+    """
+    #パラメータの指定
+    params = [f"{month}%", type]
+    rows = self.cursor.execute(query, params).fetchall()
+    #辞書型で返す
+    return {name:amount for name, amount in rows}

@@ -43,7 +43,8 @@ class Debug():
 
     self.report_controller = ReportViewController(
       self.view.frames["report"],
-      self.date_model
+      self.date_model,
+      self.db_model
     )
 
 
