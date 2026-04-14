@@ -1,13 +1,20 @@
 import tkinter as tk
 
+from controller.mode_mixin import ModeContrllerMixin
 
-class ReportViewController(tk.Frame):
-  def __init__(self, report_view, date_model, db_model):
+class ReportViewController(ModeContrllerMixin):
+  def __init__(self, report_view, date_model, db_model, mode_model):
     self.report_view = report_view
     self.date_model = date_model
     self.db_model = db_model
+    self.mode_model = mode_model
     self.bind_events()
     self.display_month()
+    self.setup_mode_buttons(
+      self.report_view.income_or_expense_button,
+      self.mode_model,
+      self.update_piechart
+    )
    
     #ボタンにコマンドをセットする
   def bind_events(self):
@@ -35,7 +42,7 @@ class ReportViewController(tk.Frame):
   def update_piechart(self):
     #表示する月とタイプ
     month = self.date_model.get_month()
-    type = 'expense'
+    type = self.mode_model.get_category_mode()
     #データを取得
     data = self.db_model.get_piechart_data(month, type)
     amounts, categories = data.values(), data.keys()

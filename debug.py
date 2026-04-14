@@ -33,18 +33,17 @@ class Debug():
       self.date_model,
       self.db_model
     )
-
     self.category_controller = CategoryViewController(
       self.view.frames["category"],
       self.date_model,
       self.db_model,
       self.mode_model
     )
-
     self.report_controller = ReportViewController(
       self.view.frames["report"],
       self.date_model,
-      self.db_model
+      self.db_model,
+      self.mode_model
     )
 
 

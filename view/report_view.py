@@ -1,6 +1,7 @@
 import tkinter as tk
 
 from view.components.change_page_buttons import ChangePageButtons
+from view.components.income_or_expense import IncomeOrExpense
 from view.components.datetime_view import DateTimeView
 from view.components.pie_chart import PieChart
 
@@ -20,6 +21,10 @@ class ReportView(tk.Frame):
     #日付表示ラベル（月）
     self.monthView_label = DateTimeView(self)
     self.monthView_label.grid(columnspan=3, row=0, column=1, padx=10, pady=10, sticky="nsew")
+
+    #収入, 支出ボタン
+    self.income_or_expense_button = IncomeOrExpense(self)
+    self.income_or_expense_button.grid(columnspan=3,row=1, column=1,padx=10,pady=10,sticky="nsew")
 
     #円グラフ
     self.income_piechart = None
