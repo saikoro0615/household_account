@@ -43,8 +43,3 @@ class MainView(tk.Tk):
   
   def show_frame(self, name):
     self.frames[name].tkraise()
-
-
-if __name__ == "__main__":
-  view = MainView()
-  view.mainloop()

@@ -60,3 +60,7 @@ class ConfView(tk.Frame):
       self.calendar.destroy()
     self.calendar = CalendarView(self, year, month, data)
     self.calendar.grid(rowspan=4, columnspan=3, row=1, column=1, sticky="nsew")
+
+  """月間収支リストの選択している項目のインデックスを返す"""
+  def get_monthIncAndExpList_selected_index(self):
+    return self.monthIncAndExp_list.monthlist.curselection()

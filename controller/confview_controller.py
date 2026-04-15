@@ -5,6 +5,8 @@ from view.components.calendar_view import CalendarView
 from model.datemanager_model import DateManagerModel
 from model.database_model import DataBaseModel
 
+from view.window.edit_view import EditView
+
 class ConfViewController():
   def __init__(self, conf_view, date_model, db_model):
     self.conf_view = conf_view #ConfView()
@@ -12,6 +14,9 @@ class ConfViewController():
     self.db_model = db_model # DataBaseModel()
     self.bind_events()
     self.display_month()
+    #月間収支リストを選択したときにサブ画面を表示
+    self.conf_view.monthIncAndExp_list.monthlist.bind("<<ListboxSelect>>", self.open_transactions_edit_window)
+
   #ボタンにコマンドをセットする
   def bind_events(self):
     self.conf_view.monthView_label.add_day_button.config(
@@ -20,14 +25,17 @@ class ConfViewController():
     self.conf_view.monthView_label.sub_day_button.config(
       command=self.sub_month
     )
+
   #表示の月を1月増やす
   def add_month(self):
     self.date_model.add_month()
     self.display_month()
+
   #表示の月を1月減らす
   def sub_month(self):
     self.date_model.subtract_month()
     self.display_month()
+
   #表示を更新する
   def display_month(self):
     self.conf_view.monthView_label.dateView_label.config(
@@ -65,18 +73,28 @@ class ConfViewController():
   def update_month_blance_list(self):
     #リスト初期化
     self.conf_view.monthIncAndExp_list.monthlist.delete(0, tk.END)
+    #内部データの初期化
+    self.record_map = []
     #リストに挿入するデータを取得
     data = self.db_model.get_category_and_amount_list(self.date_model.get_month())
     #リストに挿入
-    for i, (date, name, type, amount, memo) in enumerate(data):
+    for i, (id, date, name, type, amount, memo) in enumerate(data):
       text = f"{date} | {name} | {memo} | {amount}円"
-
       self.conf_view.monthIncAndExp_list.monthlist.insert(tk.END, text)
       #typeがincomeの場合青、expenseの場合赤
       if type == "income":
         self.conf_view.monthIncAndExp_list.monthlist.itemconfig(i, fg="Blue")
       else:
         self.conf_view.monthIncAndExp_list.monthlist.itemconfig(i, fg="Red")
+      #内部データに保存
+      self.record_map.append({
+        "id": id,
+        "date": date,
+        "name": name,
+        "mtype": type,
+        "amount": amount,
+        "memo": memo
+      })
   
   """カレンダーの表示"""
   def update_calender(self):
@@ -87,3 +105,20 @@ class ConfViewController():
     data = self.db_model.get_calender_data(month_str)
     #カレンダーを更新
     self.conf_view.set_calendar(year, month, data)
+
+  """データ編集用のサブ画面の表示"""
+  def open_transactions_edit_window(self, event):
+    #月間収支リストの選択している項目のインデックスを取得
+    selection = self.conf_view.get_monthIncAndExpList_selected_index()
+    #もし選択していない場合何もしない
+    if not selection:
+      return
+    #選択している場合、その選択された項目のidを取得
+    index = selection[0]
+    record = self.record_map[index]
+
+    print(record["id"])
+
+    #サブ画面の表示
+    edit_view = EditView(self.conf_view)
+

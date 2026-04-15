@@ -84,7 +84,7 @@ class DataBaseModel():
     """指定した月の日付とカテゴリーのnameとtype,amountとmemoを取得"""
     #テーブルから受け取るアイテムの指定
     query = """
-        SELECT t.date, c.name, c.type, t.amount, t.memo
+        SELECT t.id, t.date, c.name, c.type, t.amount, t.memo
         FROM transactions t
         JOIN categories c ON t.category_id = c.id
         WHERE t.date LIKE ?
