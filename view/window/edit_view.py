@@ -40,3 +40,7 @@ class EditView(tk.Toplevel):
     #データ削除ボタン
     self.data_delete_button = tk.Button(self, text="データ削除",bg="lightblue",font=("Arial", 20),bd=2)
     self.data_delete_button.grid(columnspan=2, row=8,column=1,padx=10,pady=10,sticky="nsew")
+
+  def update_text(self,amount, memo):
+    self.amount_textbox.set_amount(amount)
+    self.memo_textbox.set_memo(memo)

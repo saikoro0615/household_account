@@ -6,12 +6,14 @@ from model.datemanager_model import DateManagerModel
 from model.database_model import DataBaseModel
 
 from view.window.edit_view import EditView
+from controller.window_editview_controller import EditViewController
 
 class ConfViewController():
-  def __init__(self, conf_view, date_model, db_model):
+  def __init__(self, conf_view, date_model, db_model, mode_model):
     self.conf_view = conf_view #ConfView()
     self.date_model = date_model #DateManagerModel()
     self.db_model = db_model # DataBaseModel()
+    self.mode_model = mode_model #ModeManagerModel() 
     self.bind_events()
     self.display_month()
     #月間収支リストを選択したときにサブ画面を表示
@@ -117,8 +119,14 @@ class ConfViewController():
     index = selection[0]
     record = self.record_map[index]
 
-    print(record["id"])
-
     #サブ画面の表示
     edit_view = EditView(self.conf_view)
-
+    #サブ画面のコントローラ接続
+    edit_view_controller = EditViewController(
+      edit_view, 
+      self.date_model, 
+      self.db_model, 
+      self.mode_model, 
+      record["id"],
+      self.display_month()
+      )

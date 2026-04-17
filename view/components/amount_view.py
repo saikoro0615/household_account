@@ -15,5 +15,9 @@ class AmountView(tk.Frame):
     self.amount_label.grid(row=0, column=0, sticky="nsew")
 
     #テキストボックス
-    self.amount_text = tk.Entry(self)
+    self.var = tk.StringVar()
+    self.amount_text = tk.Entry(self, textvariable=self.var)
     self.amount_text.grid(columnspan=5, row=0, column=1, padx=10,sticky="nsew")
+
+  def set_amount(self, amount):
+    self.var.set(amount)

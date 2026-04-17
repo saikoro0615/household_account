@@ -1,6 +1,6 @@
 class ModeManagerModel():
   def __init__(self):
-    self.change_expense_mode()
+    self.category_mode = "expense"
 
   def get_category_mode(self):
     return self.category_mode

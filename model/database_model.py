@@ -61,6 +61,20 @@ class DataBaseModel():
     except sqlite3.IntegrityError:
       return False
   
+  def get_transactions_data(self, id):
+    """transactionsテーブルから指定したidのすべてのデータを取得"""
+    #テーブルから受け取るアイテムの指定
+    query = """
+        SELECT t.date, c.name, c.type, t.amount, t.memo
+        FROM transactions t
+        JOIN categories c ON t.category_id = c.id
+        WHERE t.id=?
+    """
+    #パラメータの指定
+    params = [f"{id}"]
+
+    return self.cursor.execute(query, params).fetchone()
+  
   def get_totalamount_by_month(self, month, type=None):
     """transactionsテーブルから指定した月とタイプのamountの合計を取得"""
     #テーブルから受け取るアイテムの指定

@@ -31,7 +31,8 @@ class Debug():
     self.conf_controller = ConfViewController(
       self.view.frames["conf"],
       self.date_model,
-      self.db_model
+      self.db_model,
+      self.mode_model
     )
     self.category_controller = CategoryViewController(
       self.view.frames["category"],
