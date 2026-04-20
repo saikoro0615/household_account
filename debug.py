@@ -6,9 +6,12 @@ from view.main_view import MainView
 from model.datemanager_model import DateManagerModel
 from model.database_model import DataBaseModel
 from model.modemanager_model import ModeManagerModel
+from eventbus.event_bus import EventBus
 
 class Debug():
   def __init__(self):
+    #EventBusを追加
+    self.event_bus = EventBus()
     # View生成
     buttons = [
       ("１：書き込み", self.go_input),
@@ -26,13 +29,15 @@ class Debug():
       self.view.frames["input"],
       self.date_model,
       self.db_model,
-      self.mode_model
+      self.mode_model,
+      self.event_bus
     )
     self.conf_controller = ConfViewController(
       self.view.frames["conf"],
       self.date_model,
       self.db_model,
-      self.mode_model
+      self.mode_model,
+      self.event_bus
     )
     self.category_controller = CategoryViewController(
       self.view.frames["category"],
@@ -45,6 +50,12 @@ class Debug():
       self.date_model,
       self.db_model,
       self.mode_model
+    )
+
+    #イベントの登録
+    self.event_bus.subscribe(
+      "data_update",
+      self.conf_controller.display_month
     )
 
 

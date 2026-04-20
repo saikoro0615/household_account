@@ -75,6 +75,25 @@ class DataBaseModel():
 
     return self.cursor.execute(query, params).fetchone()
   
+  def delete_transactions_data(self, id):
+    """transactionsテーブルから指定したidのデータを削除"""
+    #削除するデータの指定
+    query = """
+        DELETE FROM transactions WHERE id=?
+    """
+    #パラメータの指定
+    params = [f"{id}"]
+    #データ削除
+    try:
+      self.cursor.execute(query, params)
+      self.conn.commit()
+      return True
+    except sqlite3.IntegrityError:
+      return False
+    
+
+
+
   def get_totalamount_by_month(self, month, type=None):
     """transactionsテーブルから指定した月とタイプのamountの合計を取得"""
     #テーブルから受け取るアイテムの指定

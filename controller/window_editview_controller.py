@@ -5,13 +5,16 @@ from controller.mode_mixin import ModeContrllerMixin
 from service.db_add_service import DBAddService
 
 class EditViewController(ModeContrllerMixin):
-  def __init__(self, edit_view, date_model, db_model, mode_model, id, function):
+  def __init__(self, edit_view, date_model, db_model, mode_model, id, event_bus):
     self.edit_view = edit_view
     self.date_model = date_model
     self.db_model = db_model
     self.mode_model = mode_model
     self.id = id
-    self.function = function
+    self.event_bus = event_bus
+
+    #edit_viewの削除ボタンの設定
+    self.edit_view.update_delete_button(lambda: self.close_and_refresh(self.edit_view))
 
     #edit_view用のdb_add_serviceの接続
     self.edit_view_service = DBAddService(
@@ -20,10 +23,12 @@ class EditViewController(ModeContrllerMixin):
       self.db_model, 
       self.mode_model, 
       self.id,
-      on_close=lambda: self.close_and_refresh(edit_view)
+      self.event_bus,
+      function=lambda:self.close_and_refresh(self.edit_view)
       )
     
   
   def close_and_refresh(self, view):
     view.destroy()
-    self.function()
+    self.db_model.delete_transactions_data(self.id)
+    self.event_bus.emit("data_update")

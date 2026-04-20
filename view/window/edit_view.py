@@ -44,3 +44,6 @@ class EditView(tk.Toplevel):
   def update_text(self,amount, memo):
     self.amount_textbox.set_amount(amount)
     self.memo_textbox.set_memo(memo)
+
+  def update_delete_button(self, command):
+    self.data_delete_button.config(command=command)

@@ -9,11 +9,12 @@ from view.window.edit_view import EditView
 from controller.window_editview_controller import EditViewController
 
 class ConfViewController():
-  def __init__(self, conf_view, date_model, db_model, mode_model):
+  def __init__(self, conf_view, date_model, db_model, mode_model, event_bus):
     self.conf_view = conf_view #ConfView()
     self.date_model = date_model #DateManagerModel()
     self.db_model = db_model # DataBaseModel()
     self.mode_model = mode_model #ModeManagerModel() 
+    self.event_bus = event_bus
     self.bind_events()
     self.display_month()
     #月間収支リストを選択したときにサブ画面を表示
@@ -128,5 +129,5 @@ class ConfViewController():
       self.db_model, 
       self.mode_model, 
       record["id"],
-      self.display_month()
+      self.event_bus
       )

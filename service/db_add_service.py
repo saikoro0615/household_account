@@ -7,17 +7,17 @@ from controller.mode_mixin import ModeContrllerMixin
 
 
 class DBAddService(ModeContrllerMixin):
-  def __init__(self, view, date_model, db_model, mode_model, id=None, on_close=None):
+  def __init__(self, view, date_model, db_model, mode_model, id=None, event_bus=None, function=None):
     self.view = view
     self.date_model = date_model
     self.db_model = db_model
     self.mode_model = mode_model
-    self.on_close = on_close
+    self.event_bus = event_bus
+    self.function = function
     #もしidがある場合、dbからデータを取得
     if id:
-      print(self.db_model.get_transactions_data(id))
-      self.date, self.name, self.type, self.amount, self.memo = self.db_model.get_transactions_data(id)
       #指定したidのデータを初期値として登録
+      self.date, self.name, self.type, self.amount, self.memo = self.db_model.get_transactions_data(id)
       #str型をdatetime型に変換して設定
       self.date_model.current_day = datetime.strptime(self.date, "%Y-%m-%d").date()
       #タイプを初期値に変更
@@ -95,6 +95,9 @@ class DBAddService(ModeContrllerMixin):
     self.view.memo_textbox.memo_text.delete(0, tk.END)
     #完了したときにメッセージボックスで知らせる
     messagebox.showinfo("登録完了","登録しました")
-
-    if self.on_close:
-      self.on_close()
+    #登録時にconf_viewの画面の更新
+    if self.event_bus:
+      self.event_bus.emit("data_update")
+    #ファンクションがあるとき、それを実行
+    if self.function:
+      self.function()
