@@ -1,9 +1,11 @@
 import sqlite3
+import os
+import sys
 
 class DataBaseModel():
   def __init__(self):
     #データベース作成
-    self.db_name="household.db"
+    self.db_name= self.get_db_path()
     self.conn = sqlite3.connect(self.db_name)
     self.cursor = self.conn.cursor()
     
@@ -179,3 +181,38 @@ class DataBaseModel():
     rows = self.cursor.execute(query, params).fetchall()
     #辞書型で返す
     return {name:amount for name, amount in rows}
+
+  def resource_path(self, relative_path):
+    """exe化するにあたってのデータベースパスの指定"""
+    if hasattr(sys, "_MEIPASS"):
+      #exe化する場合
+      base_path = sys._MEIPASS
+    else:
+      #通常実行の場合
+      base_path = os.path.dirname(os.path.abspath(__file__))
+    return os.path.join(base_path, relative_path)
+  
+  def get_db_path(self):
+    """exe化時に書き込み可能なDBパスを取得"""
+    #exeかどうか判断
+    if hasattr(sys, "_MEIPASS"):
+      #ユーザー領域に保存
+      app_dir = os.path.join(os.getenv("APPDATA"), "HouseholdApp")
+      os.makedirs(app_dir, exist_ok=True)
+
+      db_path = os.path.join(app_dir, "household.db")
+
+      #初回のみコピー
+      if not os.path.exists(db_path):
+        init_db = self.resource_path("db/household.db")
+        import shutil
+        shutil.copyfile(init_db, db_path)
+      return db_path
+    else:
+      #通常実行（exe以外の場合）
+      return os.path.join(
+        os.path.dirname(os.path.abspath(__file__)),
+        "..",
+        "db",
+        "household.db"
+      )

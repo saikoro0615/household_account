@@ -79,6 +79,4 @@ class Debug():
 
 if __name__ == "__main__":
   app = Debug()
-  print("デバッグ開始")
   app.run()
-  print("デバッグ終了")
